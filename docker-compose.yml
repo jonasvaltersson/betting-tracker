@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  btracker:
+    image: btracker-service:$VERSION
+    build:
+      context: ./btracker
+      args:
+        - PYPI_USERNAME
+        - PYPI_PASSWORD
+    command:
+      - run-local
