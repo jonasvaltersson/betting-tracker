@@ -13,9 +13,78 @@ produces:
 basePath: /v1
 
 paths:
+  /{user_id}/bet:
+    post:
+      tags:
+        - btracker
+      operationId: bet.create
+      summary: Creates a new bet for a user
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Bet'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Bet'
+
+  /{user_id}/bet/{id}:
+    get:
+      tags:
+        - btracker
+      operationId: bet.get
+      summary: Updates a bet for a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Bet'
+    
+    put:
+      tags:
+        - btracker
+      operationId: bet.update
+      summary: Updates a bet for a user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Bet'
+    
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Bet'
   /status:
     get:
-      tags: [btracker]
+      tags: 
+        - btracker
       operationId: status.get
       summary: Service health check endpoint (e.g., for use by load balancer)
       responses:
@@ -25,6 +94,26 @@ paths:
             $ref: '#/definitions/Status'
 
 definitions:
+  Bet:
+    type: object
+    properties:
+      amount:
+        type: integer
+      exponent:
+        type: integer
+      currency:
+        type: string
+      status:
+        type: string
+        enum:
+          - pending
+          - done
+      result:
+        type: string
+        enum:
+          - win
+          - void
+          - loss
   Status:
     type: object
     required:

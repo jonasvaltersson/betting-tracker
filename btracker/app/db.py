@@ -115,7 +115,6 @@ class DBConnectionFactory:
 
     def _connect(self):
         LOGGER.info('Creating new connection...')
-        import pdb; pdb.set_trace()
         return psycopg2.connect(host=self.host, dbname=self.name, port=self.port,
                                 user=self.user, password=self.password)
 
