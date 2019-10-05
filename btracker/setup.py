@@ -1,4 +1,4 @@
-"""Setup configuration for Transaction Fraud Service"""
+"""Setup configuration"""
 
 from setuptools import setup, find_packages
 

@@ -1,0 +1,26 @@
+version: '2'
+
+services:
+
+  unittest:
+    extends: btracker-base
+    entrypoint: py.test
+    environment:
+      PYTEST_ADDOPTS: $PYTEST_ADDOPTS
+    depends_on:
+      - storage
+
+  unittest-watch:
+    extends: btracker-base
+    entrypoint: ptw
+    environment:
+      PYTEST_ADDOPTS: $PYTEST_ADDOPTS
+    command: >
+      --ext .py,.yml,.yaml,.ini,.feature
+      -p
+      -c
+      --
+      -v
+      app
+    depends_on:
+      - storage

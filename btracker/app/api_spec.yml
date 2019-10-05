@@ -1,0 +1,53 @@
+swagger: '2.0'
+
+info:
+  title: BTracker
+  version: '0.1'
+
+consumes:
+  - application/json
+produces:
+  - application/json
+  - application/problem+json
+
+basePath: /v1
+
+paths:
+  /status:
+    get:
+      tags: [btracker]
+      operationId: status.get
+      summary: Service health check endpoint (e.g., for use by load balancer)
+      responses:
+        200:
+          description: Service is healthy
+          schema:
+            $ref: '#/definitions/Status'
+
+definitions:
+  Status:
+    type: object
+    required:
+      - version
+    additionalProperties: false
+    properties:
+      version:
+        type: string
+        description: Short git commit hash of running version
+
+  Error:
+    type: object
+    description: Error response according to draft
+    properties:
+      status:
+        description: HTTP error code
+        type: integer
+      title:
+        description: Title of problem, e.g. Bad Request
+        type: string
+      detail:
+        description: Detailed human readable error description
+        type: string
+      type:
+        description: Problem type, ref to URI
+        type: string

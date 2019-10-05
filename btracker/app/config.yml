@@ -1,0 +1,72 @@
+parameters:
+
+  app_db_host:
+    environment:
+      name: APP_DB_HOST
+      required: true
+
+  app_db_port:
+    type: integer
+    value: 5432
+    environment:
+      name: APP_DB_PORT
+      required: false
+
+  app_db_user:
+    value: postgres
+    environment:
+      name: APP_DB_USER
+      required: false
+
+  app_db_password:
+    value: password
+    environment:
+      name: APP_DB_PASSWORD
+      required: false
+
+  app_db_name:
+    environment:
+      name: APP_DB_NAME
+      required: true
+
+  app_db_conn_pool_size:
+    value: 10
+    environment:
+      type: integer
+      name: APP_DB_CONN_POOL_SIZE
+      required: false
+
+  app_version:
+    environment:
+      name: APP_VERSION
+      required: true
+
+  app_env:
+    environment:
+      name: APP_ENV
+      required: true
+
+  app_log_level:
+    value: INFO
+    environment:
+      name: APP_LOG_LEVEL
+      required: false
+
+  app_log_style:
+    value: json
+    environment:
+      name: APP_LOG_STYLE
+      required: false
+
+  aws_region:
+    value: eu-west-1
+    environment:
+      name: AWS_REGION
+      required: false
+
+  app_orm_sql_echo:
+    value: false
+    environment:
+      type: boolean
+      name: APP_ORM_SQL_ECHO
+      required: false

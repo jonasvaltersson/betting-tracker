@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  btracker:
+  btracker-base:
     image: btracker-service:$VERSION
     build:
       context: ./btracker
@@ -10,3 +10,37 @@ services:
         - PYPI_PASSWORD
     command:
       - run-local
+    volumes:
+      - ./btracker/:/usr/src/app/
+      - ./btracker/wheelhouse/:/wheelhouse/
+    environment:
+      APP_DB_USER: postgres
+      APP_DB_PASSWORD: password
+      APP_DB_HOST: storage
+      APP_DB_PORT: 5432
+      APP_DB_NAME: btracker_db
+      APP_VERSION: $VERSION
+      APP_LOG_LEVEL: INFO
+      APP_LOG_STYLE: text
+      APP_POOL_SIZE: 1
+      APP_ENV: local
+      APP_ORM_SQL_ECHO: null
+      AWS_ACCESS_KEY_ID: dummy  # here in order to suppress boto error messages
+      AWS_SECRET_ACCESS_KEY: dummy
+      PYTEST_ADDOPTS: $PYTEST_ADDOPTS
+      API_BASE_URL: http://mock
+      BAMBORA_TOKEN_URL: http://mock
+      EC2_IP: '127.0.0.1'
+      PYTHONDONTWRITEBYTECODE: '1'
+
+  btracker:
+    extends: btracker-base
+    depends_on:
+      - storage
+
+  storage:
+    image: postgres:9.6.1-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: btracker_db
